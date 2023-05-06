@@ -1,0 +1,70 @@
+home.php:
+    取得產品(POST)
+        categoryID對照Category Table
+        ['request':'getProducts','category':'all']
+        ['request':'getProducts','category':${categoryID}]
+    return
+        符合條件product的所有屬性
+
+    取得所有分類(GET)
+        /php/home.php?request=getproductcategories
+    return
+        所有分類的名字
+
+    搜尋(GET)
+        /php/home.php?request=search&key=${keyword}
+    return
+        符合條件產品的所有屬性
+
+logon.php 
+    登入(POST)
+        ['request':'login','email':${email},'password':${password}]
+    return
+        ['msg':'success']
+        ['msg':'failed']
+
+    買家資料(POST)
+        ['request':'getCustomer','ID':${customerID}]
+    return
+        買家所有資料
+
+    賣家資料(POST)
+        ['request':'getSeller','ID':${sellerID}]
+    return
+        賣家所有資料
+
+myproduct.php
+    取得賣家所有產品(GET)
+        /php/myproduct.php?request=getSellerProducts&id=${sellerID}&category=${categoryID}
+        /php/myproduct.php?request=getSellerProducts&id=${sellerID}
+    return
+        符合條件產品的所有屬性
+
+    下架商品(POST)
+        ['request':'offproduct','productID':${productID}]
+    return
+        ['msg':'success']
+        ['msg':'failed']
+
+    上架商品(POST)
+        ['request':'launchproduct','productID':${productID}]
+    return
+        ['msg':'success']
+        ['msg':'failed']
+
+    變更存貨(POST)
+        ['request':'replenishment','productID':${productID},'quantity',${quantity}]
+    return
+        ['msg':'success']
+        ['msg':'failed']
+
+shoppingCart.php
+    取得購物車資料(POST)
+        ['request':'getShoppingCart','memberID':${memberID}]
+    return
+        [msg, {product.*, order_list.Amount}]
+        ['failed',null]
+
+    新增購物車(POST)
+        ['request':'addShoppingCart','memberID':${memberID},'sellerID':${sellerID},'productID':${productID},'amount':${amount}]
+    return
