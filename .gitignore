@@ -105,6 +105,7 @@ UpgradeLog*.XML
 
 # Custom
 皇室對戰分析/RoyalDeckMaker/data/Battles/*
+皇室對戰分析/RoyalDeckMaker/data/Cards/Cards Image/
 !皇室對戰分析/RoyalDeckMaker/data/Battles/Merged
 皇室對戰分析/RoyalDeckMaker/Web Scrapying/.ipynb_checkpoints
 皇室對戰分析/RoyalDeckMaker/Web Scrapying/__pycache__
