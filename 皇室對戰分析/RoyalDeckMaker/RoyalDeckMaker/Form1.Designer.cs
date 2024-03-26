@@ -49,11 +49,14 @@ namespace RoyalDeckMaker
             label4 = new Label();
             label3 = new Label();
             Exclude_Panel = new SPanel_Grey();
+            Exclude_left_button = new Button();
+            Exclude_right_button = new Button();
             Selection_Panel = new SPanel_Grey();
             border.SuspendLayout();
             BasePanel.SuspendLayout();
             panel1.SuspendLayout();
             Champion_textBox_panel.SuspendLayout();
+            Exclude_Panel.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -268,11 +271,41 @@ namespace RoyalDeckMaker
             // Exclude_Panel
             // 
             Exclude_Panel.BackColor = Color.FromArgb(255, 179, 102);
+            Exclude_Panel.Controls.Add(Exclude_left_button);
+            Exclude_Panel.Controls.Add(Exclude_right_button);
             Exclude_Panel.Location = new Point(51, 430);
             Exclude_Panel.Margin = new Padding(0);
             Exclude_Panel.Name = "Exclude_Panel";
             Exclude_Panel.Size = new Size(838, 110);
             Exclude_Panel.TabIndex = 1;
+            // 
+            // Exclude_left_button
+            // 
+            Exclude_left_button.BackColor = Color.Transparent;
+            Exclude_left_button.FlatAppearance.BorderSize = 0;
+            Exclude_left_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 217, 179);
+            Exclude_left_button.FlatStyle = FlatStyle.Flat;
+            Exclude_left_button.Image = Properties.Resources.Back;
+            Exclude_left_button.Location = new Point(0, 25);
+            Exclude_left_button.Name = "Exclude_left_button";
+            Exclude_left_button.Size = new Size(30, 64);
+            Exclude_left_button.TabIndex = 15;
+            Exclude_left_button.UseVisualStyleBackColor = false;
+            Exclude_left_button.Click += Exclude_left_button_Click;
+            // 
+            // Exclude_right_button
+            // 
+            Exclude_right_button.BackColor = Color.Transparent;
+            Exclude_right_button.FlatAppearance.BorderSize = 0;
+            Exclude_right_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 217, 179);
+            Exclude_right_button.FlatStyle = FlatStyle.Flat;
+            Exclude_right_button.Image = Properties.Resources.Forward;
+            Exclude_right_button.Location = new Point(805, 25);
+            Exclude_right_button.Name = "Exclude_right_button";
+            Exclude_right_button.Size = new Size(30, 64);
+            Exclude_right_button.TabIndex = 14;
+            Exclude_right_button.UseVisualStyleBackColor = false;
+            Exclude_right_button.Click += Exclude_right_button_Click;
             // 
             // Selection_Panel
             // 
@@ -305,6 +338,7 @@ namespace RoyalDeckMaker
             panel1.PerformLayout();
             Champion_textBox_panel.ResumeLayout(false);
             Champion_textBox_panel.PerformLayout();
+            Exclude_Panel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -312,7 +346,10 @@ namespace RoyalDeckMaker
         private Panel All_cards;
         private List<Cards> Cards;
         private List<Cards> Selections;
+        private int Select_count = 0;
         private List<Cards> Excludes;
+        private int Exclude_count = 0;
+        private int Exclude_display_index = 0;
         private int Evolution;
         private int Champion;
 
@@ -334,5 +371,7 @@ namespace RoyalDeckMaker
         private Panel panel1;
         private Label label5;
         private Label label6;
+        private Button Exclude_right_button;
+        private Button Exclude_left_button;
     }
 }

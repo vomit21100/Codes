@@ -13,7 +13,7 @@ namespace RoyalDeckMaker.Control
         public string Rarity { get; set; }
         public string Name { get; set; }
         public int Elixir { get; set; }
-        public bool Selected {  get; set; }
+        public bool Display {  get; set; }
         public string Image_Path { get; set; }
         public PictureBox PictureBox { get; set; }
         public Cards(string type, string rarity, string name, int elixir)
@@ -22,9 +22,10 @@ namespace RoyalDeckMaker.Control
             Name = name;
             Rarity = rarity;
             Elixir = elixir;
-            Selected = false;
+            Display = true;
             PictureBox = new PictureBox 
             {
+                Name = Name,
                 Size = new Size(80, 100),
                 SizeMode = PictureBoxSizeMode.StretchImage,
             };
@@ -37,10 +38,11 @@ namespace RoyalDeckMaker.Control
             Name = name;
             Rarity = rarity;
             Elixir = elixir;
-            Selected = false;
+            Display = false;        //Default set to false to no show after copy
             Image_Path = image_Path;
             PictureBox = new PictureBox 
             {
+                Name = Name,
                 Size = pictureBox.Size,
                 BackColor = Color.Transparent,
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -55,17 +57,16 @@ namespace RoyalDeckMaker.Control
         }
         public override string ToString()
         {
-            return Type + " " + Rarity + " " + Name + " " + Elixir + " " + Image_Path;
+            return Type + " " + Rarity + " " + Name + " " + Elixir + " " + Display + " " + Image_Path;
         }
         private void Cards_PictureBoxs_MouseHover(object sender, EventArgs e)
         {
-            PictureBox caller = sender as PictureBox;
-            caller.BackColor = ColorTranslator.FromHtml("#B3B3B3");
+            PictureBox.BackColor = ColorTranslator.FromHtml("#B3B3B3");
         }
         private void Cards_PictureBoxs_MouseLeave(object sender, EventArgs e)
         {
-            PictureBox caller = sender as PictureBox;
-            caller.BackColor = Color.Transparent;
+            PictureBox.BackColor = Color.Transparent;
         }
+        
     }
 }

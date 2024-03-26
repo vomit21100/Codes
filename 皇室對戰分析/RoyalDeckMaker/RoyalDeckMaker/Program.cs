@@ -58,30 +58,38 @@ namespace RoyalDeckMaker
 
             return cards;
         }
-        private void Set_Cards_Image_Pos(System.Windows.Forms.Control parent, List<Cards> cards, int start_x, int start_y, int interval_x, int interval_y)
+        private void Set_Cards_Image_Pos(System.Windows.Forms.Control parent, List<Cards> cards, int start_x, int start_y, int interval_x, int interval_y, int start_index = 0)
         {
             if (cards == null) 
                 return;
 
-            int i = 0;
+            int i = -start_index;
 
             foreach(var card in cards) 
             {
-                if (card.Selected) 
+                if (!card.Display)
                 {
                     card.PictureBox.Visible = false;
                     continue;
                 }
+                    
+                if(i >= 0)
+                {
+                    int x = start_x + (i % 9) * interval_x;
+                    int y = start_y + (i / 9) * interval_y;
 
-                int x = start_x + (i % 9) * interval_x;
-                int y = start_y + (i / 9) * interval_y;
-
-                card.PictureBox.Parent = parent;
-                card.PictureBox.Location = new Point(x, y);
-                card.PictureBox.Visible = true;
+                    card.PictureBox.Parent = parent;
+                    card.PictureBox.Location = new Point(x, y);
+                    card.PictureBox.Visible = true;
+                }
+                else
+                {
+                    card.PictureBox.Visible = false;
+                }        
 
                 i++;
             }
         }
+        
     }
 }

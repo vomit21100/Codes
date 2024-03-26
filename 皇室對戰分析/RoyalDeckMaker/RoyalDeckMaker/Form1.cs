@@ -5,41 +5,38 @@ using System.Drawing.Drawing2D;
 using RoyalDeckMaker.Control.Custom.Extension;
 using System.Drawing;
 using Bunifu.Utils;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace RoyalDeckMaker
 {
     public partial class Form1 : Form
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool AllocConsole();
 
         public Form1()
         {
             InitializeComponent();
+            AllocConsole();
+
             //Initialize not control(view) variables
             Cards = Get_Cards_Image();
             Selections = new List<Cards>();
             Excludes = new List<Cards>();
             Evolution = 0;
             Champion = 0;
+            Update_Exclude_Arrow_Status();
 
-            //Initialize Selections_PictureBoxs and Excludes_PictureBoxs
-            /*
-            Excludes_PictureBoxs = new List<PictureBox>();
-            Selections_PictureBoxs = new PictureBox[8];
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < Cards.Count; i++)
             {
-                int x = i * 86 + 35;
-                int y = 5;
+                Selections.Add(Cards[i].copy());
+                Excludes.Add(Cards[i].copy());
 
-                Selections_PictureBoxs[i] = new PictureBox
-                {
-                    Parent = Selection_Panel,
-                    BackColor = Color.Transparent,
-                    Size = new Size(80, 100),
-                    Location = new Point(x, y),
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Image = Image.FromFile(Cards[i].Image_Path)
-                };
-            }*/
+                Cards[i].PictureBox.MouseClick += Cards_PictureBoxs_Click;
+                Selections[i].PictureBox.MouseClick += Selections_PictureBoxs_Click;
+                Excludes[i].PictureBox.MouseClick += Excludes_PictureBoxs_Click;
+            }
 
             //Initialize All_cards Panel
             All_cards = new Panel
@@ -53,8 +50,6 @@ namespace RoyalDeckMaker
 
             //Initialize all cards picture box
             Set_Cards_Image_Pos(All_cards, Cards, 35, 20, 86, 116);
-
-            AllocConsole();
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
@@ -72,10 +67,6 @@ namespace RoyalDeckMaker
         {
             WindowState = FormWindowState.Minimized;
         }
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();
 
         private void Edit_Click(object sender, EventArgs e)
         {
@@ -117,6 +108,97 @@ namespace RoyalDeckMaker
                 pen.Alignment = PenAlignment.Inset;
                 e.Graphics.DrawLine(pen, 0, caller.Height, caller.Width, caller.Height);
             }
+        }
+        private void Cards_PictureBoxs_Click(object sender, EventArgs e)
+        {
+            PictureBox Caller_Picture = (PictureBox)sender;
+            int pos = Cards.FindIndex(x => x.Name == Caller_Picture.Name);
+
+            if (All_cards.Top - Exclude_Panel.Top < 0 && Select_count <= 8)
+            {
+                Select_count++;
+                Selections[pos].Display = true;
+                Set_Cards_Image_Pos(Selection_Panel, Selections, 35, 5, 86, 0);
+
+                Cards[pos].Display = false;
+                Set_Cards_Image_Pos(All_cards, Cards, 35, 20, 86, 116);
+            }
+            else if (All_cards.Top - Exclude_Panel.Top > 0)
+            {
+                Exclude_count++;
+                Excludes[pos].Display = true;
+                Set_Cards_Image_Pos(Exclude_Panel, Excludes, 35, 5, 86, 116, Exclude_display_index);
+
+                Cards[pos].Display = false;
+                Set_Cards_Image_Pos(All_cards, Cards, 35, 20, 86, 116);
+
+                Update_Exclude_Arrow_Status();
+            }
+        }
+
+        private void Selections_PictureBoxs_Click(object sender, EventArgs e)
+        {
+            PictureBox Caller_Picture = (PictureBox)sender;
+            int pos = Cards.FindIndex(x => x.Name == Caller_Picture.Name);
+
+            Selections[pos].Display = false;
+            Set_Cards_Image_Pos(Selection_Panel, Selections, 35, 5, 86, 0);
+
+            Cards[pos].Display = true;
+            Set_Cards_Image_Pos(All_cards, Cards, 35, 20, 86, 116);
+
+            Select_count--;
+        }
+
+        private void Excludes_PictureBoxs_Click(object sender, EventArgs e)
+        {
+            PictureBox Caller_Picture = (PictureBox)sender;
+            int pos = Cards.FindIndex(x => x.Name == Caller_Picture.Name);
+
+            Excludes[pos].Display = false;
+            Set_Cards_Image_Pos(Exclude_Panel, Excludes, 35, 5, 86, 116, Exclude_display_index);
+
+            Cards[pos].Display = true;
+            Set_Cards_Image_Pos(All_cards, Cards, 35, 20, 86, 116);
+
+            Exclude_count--;
+
+            Update_Exclude_Arrow_Status();
+        }
+
+        private void Update_Exclude_Arrow_Status()
+        {
+            if (Exclude_display_index == 0)
+            {
+                Exclude_left_button.Visible = false;
+            }
+            else
+            {
+                Exclude_left_button.Visible = true;
+            }
+
+            if (Exclude_display_index + 9 < Exclude_count && Exclude_count > 9)
+            {
+                Exclude_right_button.Visible = true;
+            }
+            else
+            {
+                Exclude_right_button.Visible = false;
+            }
+        }
+
+        private void Exclude_right_button_Click(object sender, EventArgs e)
+        {
+            Exclude_display_index += 9;
+            Update_Exclude_Arrow_Status();
+            Set_Cards_Image_Pos(Exclude_Panel, Excludes, 35, 5, 86, 116, Exclude_display_index);
+        }
+
+        private void Exclude_left_button_Click(object sender, EventArgs e)
+        {
+            Exclude_display_index -= 9;
+            Update_Exclude_Arrow_Status();
+            Set_Cards_Image_Pos(Exclude_Panel, Excludes, 35, 5, 86, 116, Exclude_display_index);
         }
     }
 }
