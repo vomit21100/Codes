@@ -40,6 +40,7 @@ namespace RoyalDeckMaker
             label2 = new Label();
             Edit2 = new Button();
             BasePanel = new Panel();
+            Analyze_Button = new SButton_Grey();
             panel1 = new Panel();
             Evolution_textBox = new TextBox();
             label5 = new Label();
@@ -157,6 +158,7 @@ namespace RoyalDeckMaker
             // BasePanel
             // 
             BasePanel.BackColor = Color.FromArgb(57, 61, 66);
+            BasePanel.Controls.Add(Analyze_Button);
             BasePanel.Controls.Add(panel1);
             BasePanel.Controls.Add(label5);
             BasePanel.Controls.Add(label6);
@@ -174,11 +176,23 @@ namespace RoyalDeckMaker
             BasePanel.Size = new Size(940, 640);
             BasePanel.TabIndex = 9;
             // 
+            // Analyze_Button
+            // 
+            Analyze_Button.BackColor = Color.FromArgb(153, 51, 255);
+            Analyze_Button.FlatAppearance.BorderSize = 0;
+            Analyze_Button.Font = new Font("Microsoft JhengHei UI", 16F, FontStyle.Bold, GraphicsUnit.Pixel);
+            Analyze_Button.Location = new Point(408, 577);
+            Analyze_Button.Name = "Analyze_Button";
+            Analyze_Button.Size = new Size(124, 46);
+            Analyze_Button.TabIndex = 14;
+            Analyze_Button.Text = "建立卡組";
+            Analyze_Button.UseVisualStyleBackColor = false;
+            // 
             // panel1
             // 
             panel1.BackColor = Color.Transparent;
             panel1.Controls.Add(Evolution_textBox);
-            panel1.Location = new Point(152, 284);
+            panel1.Location = new Point(227, 284);
             panel1.Name = "panel1";
             panel1.Size = new Size(42, 28);
             panel1.TabIndex = 13;
@@ -203,7 +217,7 @@ namespace RoyalDeckMaker
             label5.BackColor = Color.Transparent;
             label5.Font = new Font("Microsoft JhengHei UI", 13F);
             label5.ForeColor = Color.WhiteSmoke;
-            label5.Location = new Point(192, 286);
+            label5.Location = new Point(269, 286);
             label5.Name = "label5";
             label5.Size = new Size(28, 23);
             label5.TabIndex = 12;
@@ -217,15 +231,15 @@ namespace RoyalDeckMaker
             label6.ForeColor = Color.WhiteSmoke;
             label6.Location = new Point(51, 286);
             label6.Name = "label6";
-            label6.Size = new Size(104, 23);
+            label6.Size = new Size(176, 23);
             label6.TabIndex = 11;
-            label6.Text = "進化卡數量:";
+            label6.Text = "進化卡最大使用數量:";
             // 
             // Champion_textBox_panel
             // 
             Champion_textBox_panel.BackColor = Color.Transparent;
             Champion_textBox_panel.Controls.Add(Champion_textBox);
-            Champion_textBox_panel.Location = new Point(152, 222);
+            Champion_textBox_panel.Location = new Point(227, 221);
             Champion_textBox_panel.Name = "Champion_textBox_panel";
             Champion_textBox_panel.Size = new Size(42, 28);
             Champion_textBox_panel.TabIndex = 10;
@@ -237,7 +251,7 @@ namespace RoyalDeckMaker
             Champion_textBox.BorderStyle = BorderStyle.None;
             Champion_textBox.Font = new Font("Microsoft JhengHei UI", 13F);
             Champion_textBox.ForeColor = Color.WhiteSmoke;
-            Champion_textBox.Location = new Point(0, 2);
+            Champion_textBox.Location = new Point(0, 3);
             Champion_textBox.Name = "Champion_textBox";
             Champion_textBox.Size = new Size(42, 23);
             Champion_textBox.TabIndex = 7;
@@ -250,7 +264,7 @@ namespace RoyalDeckMaker
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Microsoft JhengHei UI", 13F);
             label4.ForeColor = Color.WhiteSmoke;
-            label4.Location = new Point(192, 224);
+            label4.Location = new Point(267, 224);
             label4.Name = "label4";
             label4.Size = new Size(28, 23);
             label4.TabIndex = 9;
@@ -264,9 +278,9 @@ namespace RoyalDeckMaker
             label3.ForeColor = Color.WhiteSmoke;
             label3.Location = new Point(51, 224);
             label3.Name = "label3";
-            label3.Size = new Size(104, 23);
+            label3.Size = new Size(176, 23);
             label3.TabIndex = 8;
-            label3.Text = "英雄卡數量:";
+            label3.Text = "英雄卡最大使用數量:";
             // 
             // Exclude_Panel
             // 
@@ -373,5 +387,6 @@ namespace RoyalDeckMaker
         private Label label6;
         private Button Exclude_right_button;
         private Button Exclude_left_button;
+        private SButton_Grey Analyze_Button;
     }
 }

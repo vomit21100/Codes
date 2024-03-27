@@ -466,10 +466,36 @@ namespace RoyalDeckMaker.Control.Custom.Extension
             g.FillRoundedRectangle(new SolidBrush(background), -1, -1, Width + 1, Height + 1, 0);
             g.FillRoundedRectangle(new SolidBrush(spanelcolor), 0, 0, Width - 1, Height - 1, 10);
         }
-        public void SPanel_Resize(object sender, EventArgs e)
+    }
+    public class SButton_Grey : Button
+    {
+        protected override void OnPaint(PaintEventArgs e)
         {
+            Graphics g = e.Graphics;
+            Color background = ColorTranslator.FromHtml("#393D42");     //灰色底
+            Color spanelcolor = BackColor;
+
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.FillRoundedRectangle(new SolidBrush(background), -1, -1, Width + 1, Height + 1, 0);
+            g.FillRoundedRectangle(new SolidBrush(spanelcolor), 0, 0, Width - 1, Height - 1, 10);
+
+            Font DrawFont = Font;
+            Rectangle rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            g.DrawString(Text, DrawFont, Brushes.White, rect, stringFormat);
+        }
+        protected override void OnMouseHover(System.EventArgs e)
+        {
+            BackColor = Color.FromArgb(178, 102, 255);
             Invalidate();
         }
-
+        protected override void OnMouseLeave(System.EventArgs e)
+        {
+            BackColor = Color.FromArgb(153, 51, 255);
+            Invalidate();
+        }
     }
 }
